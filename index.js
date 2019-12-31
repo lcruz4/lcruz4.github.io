@@ -26,14 +26,11 @@ $("form").on("submit", function(e) {
         url : $(this).attr('action') || window.location.pathname,
         type: "POST",
         data: $.param(dataObj),
-        xhrFields: {
-            withCredentials: false // cors request
-        },
         success: function (data) {
             $(".response").html(data);
         },
         error: function (_jXHR, _textStatus, errorThrown) {
-            alert(errorThrown);
+            $(".response").html(errorThrown);
         }
     });
 });
