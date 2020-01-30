@@ -7,14 +7,16 @@ const LEVELS = {
     70: 6
 };
 let i = 1;
-let main = $(".main");
 
 addRow();
+$(".addRow").on("click", addRow);
 
 function addRow() {
-    main.append("<div class=\"row" + i + "\"></div>");
-    main.find(":last-child").load("/matCalcForm.html", function loadDone() {
-        main.find(":last-child form").on("submit", onSubmit);
+    let rows = $(".rows");
+
+    rows.append("<div class=\"row" + i++ + "\"></div>");
+    rows.children(":last-child").load("/matCalcForm.html", function loadDone() {
+        rows.children(":last-child").find("form").on("submit", onSubmit);
     });
 }
 
