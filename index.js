@@ -6,10 +6,22 @@ const LEVELS = {
     55: 5,
     70: 6
 };
+let i = 1;
+let main = $(".main");
 
-$("form").on("submit", function(e) {
+addRow();
+
+function addRow() {
+    main.append("<div class=\"row" + i + "\"></div>");
+    main.find(":last-child").load("/matCalcForm.html", function loadDone() {
+        main.find(":last-child form").on("submit", onSubmit);
+    });
+}
+
+function onSubmit(e) {
     e.preventDefault();
     let formElem = $(this);
+    let responseElem = formElem.parent().find(".response");
     let formData = formElem.serializeArray();
     let dataObj = {};
 
@@ -27,10 +39,10 @@ $("form").on("submit", function(e) {
         type: "POST",
         data: $.param(dataObj),
         success: function (data) {
-            $(".response").html(data);
+            responseElem.html(data);
         },
         error: function (_jXHR, _textStatus, errorThrown) {
-            $(".response").html(errorThrown);
+            responseElem.html(errorThrown);
         }
     });
-});
+}
