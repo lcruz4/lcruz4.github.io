@@ -24,7 +24,7 @@ function addRow() {
 function onSubmit(e) {
     e.preventDefault();
     let formElem = $(this);
-    let responseElem = formElem.parent().find(".response");
+    let responseElem = $("#response");
     let formData = formElem.serializeArray();
     let dataObj = {};
 
