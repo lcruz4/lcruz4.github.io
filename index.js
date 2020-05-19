@@ -79,7 +79,7 @@ function sumFormData() {
       exp: 0
     };
 
-    $("form").each(() => {
+    $("form").each(function() {
       let data = $(this).data()
 
       totals.coins += data.coins;
