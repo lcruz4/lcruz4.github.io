@@ -49,7 +49,7 @@ function onSubmit(e) {
 
                 if (i > 2) {
                     totals = sumFormData();
-                    setResponseElem(totalsElem, formatResponse(totals));
+                    setResponseElem(totalsElem, "<h4>Totals</h4>" + formatResponse(totals));
                 }
             },
             error: function (_jXHR, _textStatus, errorThrown) {
