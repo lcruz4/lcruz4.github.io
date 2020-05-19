@@ -38,26 +38,31 @@ function onSubmit(e) {
     dataObj.endLevel = LEVELS[parseInt(dataObj.endRank.split("/")[1])];
     dataObj.endRank = parseInt(dataObj.endRank.split("/")[0]);
 
-    $.ajax({
-        url : $(this).attr('action') || window.location.pathname,
-        type: "POST",
-        data: $.param(dataObj),
-        success: function (data) {
-            formElem.data(data)
-            responseElem.removeClass("d-none")
-            responseElem.html(formatResponse(data));
+    if (startRank < endRank || startLevel < endLevel) {
+        $.ajax({
+            url : $(this).attr('action') || window.location.pathname,
+            type: "POST",
+            data: $.param(dataObj),
+            success: function (data) {
+                formElem.data(data)
+                responseElem.removeClass("d-none")
+                responseElem.html(formatResponse(data));
 
-            if (i > 2) {
-                totals = sumFormData();
-                totalsElem.removeClass("d-none")
-                totalsElem.html(formatResponse(totals))
+                if (i > 2) {
+                    totals = sumFormData();
+                    totalsElem.removeClass("d-none")
+                    totalsElem.html(formatResponse(totals))
+                }
+            },
+            error: function (_jXHR, _textStatus, errorThrown) {
+                responseElem.removeClass("d-none")
+                responseElem.html(errorThrown);
             }
-        },
-        error: function (_jXHR, _textStatus, errorThrown) {
-            responseElem.removeClass("d-none")
-            responseElem.html(errorThrown);
-        }
-    });
+        });
+    } else {
+      responseElem.removeClass("d-none")
+      responseElem.html("Start Rank should be less than End Rank");
+    }
 }
 
 function formatResponse(data) {
