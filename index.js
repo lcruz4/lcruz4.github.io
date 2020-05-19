@@ -31,8 +31,8 @@ function addRow() {
 function onSubmit(e) {
     e.preventDefault();
     let formElem = $(this);
-    let totalsElem = $("#totals");
-    let responseElem = $("#response");
+    let totalsElem = $(".totals");
+    let responseElem = $(".response");
     let formData = formElem.serializeArray();
     let dataObj = {};
 
@@ -55,13 +55,16 @@ function onSubmit(e) {
             totals.silver += data.silver;
             totals.gold += data.gold;
             totals.exp += data.exp;
+            responseElem.removeClass("d-none")
             responseElem.html(formatResponse(data));
 
             if (i > 1) {
-                totals.html(formatResponse(totals))
+                totalsElem.removeClass("d-none")
+                totalsElem.html(formatResponse(totals))
             }
         },
         error: function (_jXHR, _textStatus, errorThrown) {
+            responseElem.removeClass("d-none")
             responseElem.html(errorThrown);
         }
     });
@@ -74,5 +77,5 @@ function formatResponse(data) {
         Silver Mats: ${data.silver}<br>
         Gold Mats: ${data.gold}<br>
         Experience: ${data.exp}
-    `
+    `;
 }
