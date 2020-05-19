@@ -8,6 +8,13 @@ const LEVELS = {
     0: 7
 };
 let i = 1;
+let totals = {
+  coins: 0,
+  bronze: 0,
+  silver: 0,
+  gold: 0,
+  exp: 0
+};
 
 addRow();
 $(".addRow").on("click", addRow);
@@ -24,12 +31,13 @@ function addRow() {
 function onSubmit(e) {
     e.preventDefault();
     let formElem = $(this);
+    let totalsElem = $("#totals");
     let responseElem = $("#response");
     let formData = formElem.serializeArray();
     let dataObj = {};
 
     for(let i = 0, n = formData.length; i < n; i++) {
-        dataObj[formData[i].id] = formData[i].value;
+        dataObj[formData[i].name] = formData[i].value;
     }
 
     dataObj.startLevel = LEVELS[parseInt(dataObj.startRank.split("/")[1])];
@@ -42,10 +50,29 @@ function onSubmit(e) {
         type: "POST",
         data: $.param(dataObj),
         success: function (data) {
-            responseElem.html(data);
+            totals.coins += data.coins;
+            totals.bronze += data.bronze;
+            totals.silver += data.silver;
+            totals.gold += data.gold;
+            totals.exp += data.exp;
+            responseElem.html(formatResponse(data));
+
+            if (i > 1) {
+                totals.html(formatResponse(totals))
+            }
         },
         error: function (_jXHR, _textStatus, errorThrown) {
             responseElem.html(errorThrown);
         }
     });
+}
+
+function formatResponse(data) {
+    return `
+        Coins: ${data.coins}<br>
+        Bronze Mats: ${data.bronze}<br>
+        Silver Mats: ${data.silver}<br>
+        Gold Mats: ${data.gold}<br>
+        Experience: ${data.exp}
+    `
 }
