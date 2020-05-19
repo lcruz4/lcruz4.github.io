@@ -38,7 +38,7 @@ function onSubmit(e) {
     dataObj.endLevel = LEVELS[parseInt(dataObj.endRank.split("/")[1])];
     dataObj.endRank = parseInt(dataObj.endRank.split("/")[0]);
 
-    if (startRank < endRank || startLevel < endLevel) {
+    if (dataObj.startRank < dataObj.endRank || dataObj.startLevel < dataObj.endLevel) {
         $.ajax({
             url : $(this).attr('action') || window.location.pathname,
             type: "POST",
