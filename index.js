@@ -29,7 +29,7 @@ function onSubmit(e) {
     let dataObj = {};
 
     for(let i = 0, n = formData.length; i < n; i++) {
-        dataObj[formData[i].name] = formData[i].value;
+        dataObj[formData[i].id] = formData[i].value;
     }
 
     dataObj.startLevel = LEVELS[parseInt(dataObj.startRank.split("/")[1])];
