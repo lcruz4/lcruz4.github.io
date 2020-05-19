@@ -58,7 +58,7 @@ function onSubmit(e) {
             responseElem.removeClass("d-none")
             responseElem.html(formatResponse(data));
 
-            if (i > 1) {
+            if (i > 2) {
                 totalsElem.removeClass("d-none")
                 totalsElem.html(formatResponse(totals))
             }
