@@ -44,24 +44,20 @@ function onSubmit(e) {
             type: "POST",
             data: $.param(dataObj),
             success: function (data) {
-                formElem.data(data)
-                responseElem.removeClass("d-none")
-                responseElem.html(formatResponse(data));
+                formElem.data(data);
+                setResponseElem(responseElem, formatResponse(data));
 
                 if (i > 2) {
                     totals = sumFormData();
-                    totalsElem.removeClass("d-none")
-                    totalsElem.html(formatResponse(totals))
+                    setResponseElem(totalsElem, formatResponse(totals));
                 }
             },
             error: function (_jXHR, _textStatus, errorThrown) {
-                responseElem.removeClass("d-none")
-                responseElem.html(errorThrown);
+                setResponseElem(responseElem, errorThrown, true);
             }
         });
     } else {
-      responseElem.removeClass("d-none")
-      responseElem.html("Start Rank should be less than End Rank");
+      setResponseElem(responseElem, "Start Rank should be less than End Rank", true);
     }
 }
 
@@ -95,4 +91,11 @@ function sumFormData() {
     });
 
     return totals;
+}
+
+function setResponseElem(elem, html, error) {
+  elem.removeClass("d-none");
+  elem.toggleClass("alert-success", !error);
+  elem.toggleClass("alert-danger", error);
+  elem.html(html);
 }
