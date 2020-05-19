@@ -96,6 +96,6 @@ function sumFormData() {
 function setResponseElem(elem, html, error) {
   elem.removeClass("d-none");
   elem.toggleClass("alert-success", !error);
-  elem.toggleClass("alert-danger", error);
+  elem.toggleClass("alert-danger", !!error);
   elem.html(html);
 }
